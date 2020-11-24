@@ -72,3 +72,51 @@ class App extends Component {
                 data: sortedData,
                 directionOfSort: "ascending"
             })
+        } else {
+            let sortedData = newArray.sort((a, b) => {
+                if(a[columnName] > b[columnName]) return -1;
+                if (a[columnName] < b[columnName]) return 1;
+                return 0;
+            })
+            this.setState({
+                data: sortedData,
+                directionOfSort: "descending"
+            })
+        }
+    }
+
+};
+
+handleInput = (e)=> {
+    let query = e.target.value
+    this.setState({search: query})
+}
+
+render(){
+
+  let filteredList = this.state.data.filter((person)=>{
+      return (
+          person.name.first.toLowerCase().includes(this.state.search.toLowerCase()) ||
+          person.name.last.toLowerCase().includes(this.state.search.toLowerCase()) ||
+          person.cell.toLowerCase().includes(this.state.search.toLowerCase()) ||
+          person.email.toLowerCase().includes(this.state.search.toLowerCase())
+      )
+  })
+
+  return (
+    <div className="App">
+      
+      <header>
+        <Navbar handleInput={this.handleInput}/>
+      </header>
+      
+      <main className="container">
+        <Table state={this.state} people={filteredList} sort={this.sortBy}/> 
+      </main>
+
+    </div>
+  );
+}
+}
+
+export default App;
