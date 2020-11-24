@@ -35,3 +35,40 @@ class App extends Component {
           })
       })
   };
+
+  sortBy = (columnName) => {
+    const newArray = [...this.state.data];
+
+    if(columnName === 'first'|| columnName === "last"){
+        if(this.state.directionOfSort === "descending"){
+            let sortedData = newArray.sort((a, b) => {
+                if(a.name[columnName] < b.name[columnName]) return -1;
+                if (a.name[columnName] > b.name[columnName]) return 1;
+                return 0;
+            })
+            this.setState({
+                data: sortedData,
+                directionOfSort: "ascending"
+            })
+        } else {
+            let sortedData = newArray.sort((a, b) => {
+                if(a.name[columnName] > b.name[columnName]) return -1;
+                if (a.name[columnName] < b.name[columnName]) return 1;
+                return 0;
+            })
+            this.setState({
+                data: sortedData,
+                directionOfSort: "descending"
+            })
+        }
+    } else {
+        if(this.state.directionOfSort === "descending"){
+            let sortedData = newArray.sort((a, b) => {
+                if(a[columnName] < b[columnName]) return -1;
+                if (a[columnName] > b[columnName]) return 1;
+                return 0;
+            })
+            this.setState({
+                data: sortedData,
+                directionOfSort: "ascending"
+            })
